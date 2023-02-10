@@ -6,14 +6,14 @@ import os
 import json
 import torch
 
-def main():
+def run_pretrain():
     # print(torch.cuda.is_available())
     script_path = os.path.realpath(__file__).replace('\\', '/').replace('/train_from_scratch.py', '')
     training_path = script_path + "/dataset/"
     training_files = [training_path + file for file in os.listdir(training_path)]
-    # model_path = "/lustre/home/sc066/waylon/mathbert/tasks/pretrain/further-pretrain/model_files/"
-    model_path = script_path + "/model_files_large/"
-    tokenizer_path = script_path + "/model_files/"
+
+    model_path = script_path + "/model_files/"
+    tokenizer_path = script_path + "/tokenizer_files/"
 
     if not os.path.exists(model_path):
         os.makedirs(model_path)
@@ -79,12 +79,12 @@ def main():
     tokenizer = AutoTokenizer.from_pretrained(tokenizer_path)
 
     def encode_with_truncation(examples):
-    """Mapping function to tokenize the sentences passed with truncation"""
-    return tokenizer(examples["text"], truncation=True, padding="max_length", max_length=max_length, return_special_tokens_mask=True)
+        """Mapping function to tokenize the sentences passed with truncation"""
+        return tokenizer(examples["text"], truncation=True, padding="max_length", max_length=max_length, return_special_tokens_mask=True)
 
     def encode_without_truncation(examples):
-    """Mapping function to tokenize the sentences passed without truncation"""
-    return tokenizer(examples["text"], return_special_tokens_mask=True)
+        """Mapping function to tokenize the sentences passed without truncation"""
+        return tokenizer(examples["text"], return_special_tokens_mask=True)
 
     # the encode function will depend on the truncate_longer_samples variable
     encode = encode_with_truncation if truncate_longer_samples else encode_without_truncation
@@ -130,8 +130,7 @@ def main():
                                     num_proc=4, desc=f"Grouping texts in chunks of {max_length}")
 
     # initialize the model with the config
-    # model_config = BertConfig(vocab_size=vocab_size, max_position_embeddings=max_length)
-    model_config = BertConfig(num_hidden_layers=24, hidden_size=1024, num_attention_heads=16, vocab_size=vocab_size, max_position_embeddings=max_length)
+    model_config = BertConfig(vocab_size=vocab_size, max_position_embeddings=max_length)
     model = BertForMaskedLM(config=model_config)
 
     # initialize the data collator, randomly masking 20% (default is 15%) of the tokens for the Masked Language
@@ -167,5 +166,5 @@ def main():
     trainer.train()
     trainer.save_model(model_path)
 
-if __name __ == "__main__":
-    main()
+if __name__ == "__main__":
+    run_pretrain()
