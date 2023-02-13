@@ -1,19 +1,3 @@
-#!/bin/bash
-#SBATCH --qos epsrc
-#SBATCH --account=jlxi8926-auto-sum
-#SBATCH --time=3-0:0:0
-#SBATCH --nodes=1
-#SBATCH --gres=gpu:4
-#SBATCH --mem=160G
-#SBATCH --output=/bask/projects/j/jlxi8926-auto-sum/waylon/mathbert/tasks/SimCSE/output_partial_math_local.output
-module purge
-module load baskerville
-
-#! Insert additional module load commands after this line if needed:
-module load CUDA/11.1.1-GCC-10.2.0
-source ~/.bashrc
-conda activate bert
-
 ANNO=partial
 INPUT=math
 
