@@ -1,6 +1,6 @@
 # MATcH
 
-Supporting code for the paper BERT is not The Count: Learning to Match Mathematical Statements with Proofs
+Supporting code for the paper [BERT is not The Count: Learning to Match Mathematical Statements with Proofs](https://homepages.inf.ed.ac.uk/scohen/eacl23match.pdf)
 
 ## Getting start
 
@@ -107,7 +107,7 @@ bash run_pretrain.sh
 
 Train ScratchBERT matching model:
 
-```
+```bash
 cd train
 bash train_scratchbert_matching.sh
 ```
@@ -118,7 +118,7 @@ If you want to specify the hyperparameter, follow the instruction for training M
 
 Evaluate NPT model:
 
-```
+```bash
 cd train
 
 MODELPATH= # the location of the trained matching model
@@ -132,6 +132,17 @@ ${TESTSET} \
 --gpu 0 \
 --input ${INPUT} \
 --glob ${GLOB}
+```
+
+## Citation
+
+```latex
+@inproceedings{li-23,
+    author = "W. Li and Y. Ziser and M. Coavoux and S. B. Cohen",
+    title = "BERT is not The Count: Learning to Match Mathematical Statements with Proofs",
+    journal = "Proceedings of {EACL}",
+    year = "2023"
+}
 ```
 
 
