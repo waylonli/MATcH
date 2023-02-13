@@ -136,7 +136,7 @@ ${TESTSET} \
 
 ## Citation
 
-```latex
+```
 @inproceedings{li-23,
     author = "W. Li and Y. Ziser and M. Coavoux and S. B. Cohen",
     title = "BERT is not The Count: Learning to Match Mathematical Statements with Proofs",
