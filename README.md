@@ -13,6 +13,10 @@ conda env create -f MATcH_env.yml
 conda activate bert
 ```
 
+## Download datasets
+
+https://bollin.inf.ed.ac.uk/match.html
+
 ## Training: NPT
 
 If you want to use the same hyperparameter setting in the paper, you can simply run:
