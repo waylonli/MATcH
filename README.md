@@ -2,7 +2,9 @@
 
 Supporting code for the paper [BERT is not The Count: Learning to Match Mathematical Statements with Proofs](https://homepages.inf.ed.ac.uk/scohen/eacl23match.pdf)
 
-## Getting start
+We develop a model to match mathematical statements to their corresponding proofs. This task can be used in areas such as mathematical information retrieval. Our work comes with a dataset for this task, including a large number of statement-proof pairs in different areas of mathematics.
+
+## Getting started
 
 Clone this repository and install the dependencies:
 
@@ -15,7 +17,7 @@ conda activate bert
 
 ## Download datasets
 
-https://bollin.inf.ed.ac.uk/match.html
+Available at https://bollin.inf.ed.ac.uk/match.html (or see dataset/ for README)
 
 ## Training: NPT
 
