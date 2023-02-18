@@ -19,41 +19,61 @@ conda activate bert
 
 Available at https://bollin.inf.ed.ac.uk/match.html (or see dataset/ for README)
 
-## Training: NPT
+## Training: ScratchBERT
 
-If you want to use the same hyperparameter setting in the paper, you can simply run:
+### Pretraining
+
+Pretrain ScratchBERT on MATcH:
+
+```bash
+cd pretrain
+bash run_pretrain.sh
+```
+
+**OR**
+
+You can also download our pretrained version of ScratchBERT if you don't want to re-pretrain the language model: https://bollin.inf.ed.ac.uk/match.html
+
+### After Pretraining
+
+Train ScratchBERT matching model:
 
 ```bash
 cd train
-bash train_NPT.sh
+bash train_scratchbert_matching.sh
 ```
 
-If you want to specify any hyperparameters, here's an example for training a local model:
+If you want to specify the hyperparameter, here's an example for training a local ScratchBERT matching model:
 
 ```bash
 cd train
 conda activate bert
 
-MODELPATH=./trained_NPT_model
-ANNO=conservation # can be changed to partial / trans / full
+SYM=conservation # symbol replacement method
+INPUT=both # input type, can be [both, math, text] 
 
-python neural_model.py train ${MODELPATH} \
-./datasets/${ANNO}_train \ # training set
-./datasets/${ANNO}_dev \ # validation set
+MODELPATH=./mathbert_${ANNO}_${INPUT}_local
+PRETRAINPATH=./model_files # path / link for ScratchBERT pretrained language model
+
+python neural_model_bert.py train ${MODELPATH} \
+./datasets/${SYM}_train.csv \
+./datasets/${SYM}_dev.csv \
+./datasets/full_dev.csv \
 --seed 10000 \ # random seed
 -v 40 \ # logger verbosity, higher is quieter
--i 400 \ # training epochs
--N 60 \ # batch size
+-i 60 \ # training epochs
+-N 16 \ # batch size
 -L softmax \ # loss for local cross entropy. sigmoid: binary cross entropy
 -W 300 \ # encoder dimension
 -d 2 \ # encoder depth
 --dk 128 \ # encoder query dimension
 --n-heads 4 \ # number of attention heads
 --max-length 200 \ # max length for self attention sequence (to avoid out of memory errors)
+--input ${INPUT} \ # input type, can be [both, math, text]
 --optimizer asgd \ # optimizer
--l 0.005 \ # learning rate
+-l 2e-3 \ # learning rate
 --gpu 0 \ # gpu id
---input ${INPUT} # input type, can be [both, math, text]
+--pretrainpath $PRETRAINPATH # path to pretrained language model
 ```
 
 ## Training: MathBERT
@@ -71,50 +91,69 @@ If you want to specify any hyperparameters, here's an example for training a loc
 cd train
 conda activate bert
 
-ANNO=conservation
-INPUT=both
+SYM=conservation # symbol replacement method
+INPUT=both # input type, can be [both, math, text] 
 
 MODELPATH=./mathbert_${ANNO}_${INPUT}_local
 PRETRAINPATH=tbs17/MathBERT-custom # path / link for pretrained language model
 
 python neural_model_bert.py train ${MODELPATH} \
-./datasets/${ANNO}_train.csv \
-./datasets/${ANNO}_dev.csv \
+./datasets/${SYM}_train.csv \
+./datasets/${SYM}_dev.csv \
 ./datasets/full_dev.csv \
---seed 10000 \
--v 40 \
--i 60 \
--N 16 \
--L softmax \
--W 300 \
--d 2 \
---dk 128 \
---n-heads 4 \
---max-length 200 \
---input ${INPUT} \
---optimizer asgd \
--l 2e-3 \
---gpu 0 \
+--seed 10000 \ # random seed
+-v 40 \ # logger verbosity, higher is quieter
+-i 60 \ # training epochs
+-N 16 \ # batch size
+-L softmax \ # loss for local cross entropy. sigmoid: binary cross entropy
+-W 300 \ # encoder dimension
+-d 2 \ # encoder depth
+--dk 128 \ # encoder query dimension
+--n-heads 4 \ # number of attention heads
+--max-length 200 \ # max length for self attention sequence (to avoid out of memory errors)
+--input ${INPUT} \ # input type, can be [both, math, text]
+--optimizer asgd \ # optimizer
+-l 2e-3 \ # learning rate
+--gpu 0 \ # gpu id
 --pretrainpath $PRETRAINPATH
 ```
 
-## Training: ScratchBERT
+## Training: NPT
 
-Pretrain ScratchBERT on MATcH:
-
-```bash
-cd pretrain
-bash run_pretrain.sh
-```
-
-Train ScratchBERT matching model:
+If you want to use the same hyperparameter setting in the paper, you can simply run:
 
 ```bash
 cd train
-bash train_scratchbert_matching.sh
+bash train_NPT.sh
 ```
 
-If you want to specify the hyperparameter, follow the instruction for training MathBERT matching model, but change the pretrain path to where ScratchBERT model is located.
+If you want to specify any hyperparameters, here's an example for training a local model:
+
+```bash
+cd train
+conda activate bert
+
+MODELPATH=./trained_NPT_model
+SYM=conservation # can be changed to partial / trans / full
+
+python neural_model.py train ${MODELPATH} \
+./datasets/${SYM}_train \ # training set
+./datasets/${SYM}_dev \ # validation set
+--seed 10000 \ # random seed
+-v 40 \ # logger verbosity, higher is quieter
+-i 400 \ # training epochs
+-N 60 \ # batch size
+-L softmax \ # loss for local cross entropy. sigmoid: binary cross entropy
+-W 300 \ # encoder dimension
+-d 2 \ # encoder depth
+--dk 128 \ # encoder query dimension
+--n-heads 4 \ # number of attention heads
+--max-length 200 \ # max length for self attention sequence (to avoid out of memory errors)
+--optimizer asgd \ # optimizer
+-l 0.005 \ # learning rate
+--gpu 0 \ # gpu id
+--input ${INPUT} # input type, can be [both, math, text]
+```
 
 ## Evaluation
 
