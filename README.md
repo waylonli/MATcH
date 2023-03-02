@@ -50,7 +50,7 @@ python ../train/convert_to_csv.py ${DATASETPATH}/${SPLIT}/${SPLIT}_${SYM}_test $
 You can also edit the `./train/convert_to_csv.sh` script and simply run:
 ```bash
 cd train
-convert_to_csv.sh
+bash convert_to_csv.sh
 ```
 
 ## Training: ScratchBERT
