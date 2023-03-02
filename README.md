@@ -32,7 +32,7 @@ python -m spacy download en_core_web_sm
 
 Available at https://bollin.inf.ed.ac.uk/match.html (or see dataset/ for README)
 
-Once finish downloading the dataset, unzip the three directories "mixed", "pb" and "unmixed" under the 'datasets' folder. 
+Once finish downloading the dataset, unzip the three directories "mixed", "pb" and "unmixed" to the "datasets" folder. 
 
 If you need a csv version of dataset for training ScratchBERT and MathBERT matching model, do the following:
 ```bash
