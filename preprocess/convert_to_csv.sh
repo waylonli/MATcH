@@ -1,5 +1,5 @@
 SYM=conservation
-DATASETPATH=../datasets
+DATASETPATH=../datasets/unmixed
 
 python ./convert_to_csv.py ${DATASETPATH}/${SYM}_train ${DATASETPATH}/${SYM}_train.csv
 python ./convert_to_csv.py ${DATASETPATH}/${SYM}_dev ${DATASETPATH}/${SYM}_dev.csv
