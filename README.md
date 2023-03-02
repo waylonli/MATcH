@@ -1,6 +1,6 @@
 # MATcH
 
-Supporting code for the paper [BERT is not The Count: Learning to Match Mathematical Statements with Proofs](https://homepages.inf.ed.ac.uk/scohen/eacl23match.pdf)
+Supporting code for the EACL 2023 paper [BERT is not The Count: Learning to Match Mathematical Statements with Proofs](https://arxiv.org/abs/2102.02110)
 
 We develop a model to match mathematical statements to their corresponding proofs. This task can be used in areas such as mathematical information retrieval. Our work comes with a dataset for this task, including a large number of statement-proof pairs in different areas of mathematics.
 
