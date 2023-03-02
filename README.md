@@ -59,7 +59,7 @@ conda activate bert
 SYM=conservation # symbol replacement method
 INPUT=both # input type, can be [both, math, text] 
 
-MODELPATH=./mathbert_${ANNO}_${INPUT}_local
+MODELPATH=./scratchbert_${ANNO}_${INPUT}_local
 PRETRAINPATH=./model_files # path / link for ScratchBERT pretrained language model
 
 python neural_model_bert.py train ${MODELPATH} \
