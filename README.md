@@ -32,7 +32,26 @@ python -m spacy download en_core_web_sm
 
 Available at https://bollin.inf.ed.ac.uk/match.html (or see dataset/ for README)
 
-Once finish downloading the dataset, unzip the three directories "mixed", "pb" and "unmixed" under datasets
+Once finish downloading the dataset, unzip the three directories "mixed", "pb" and "unmixed" under the 'datasets' folder. 
+
+If you need a csv version of dataset for training ScratchBERT and MathBERT matching model, do the following:
+```bash
+cd train
+
+SYM=conservation # conservation / partial / full / trans
+SPLIT=unmixed # mixed / unmixed
+DATASETPATH=../datasets
+
+python ../train/convert_to_csv.py ${DATASETPATH}/${SPLIT}/${SPLIT}_${SYM}_train ${DATASETPATH}/${SYM}_train.csv
+python ../train/convert_to_csv.py ${DATASETPATH}/${SPLIT}/${SPLIT}_${SYM}_dev ${DATASETPATH}/${SYM}_dev.csv
+python ../train/convert_to_csv.py ${DATASETPATH}/${SPLIT}/${SPLIT}_${SYM}_test ${DATASETPATH}/${SYM}_test.csv
+```
+
+You can also edit the `./train/convert_to_csv.sh` script and simply run:
+```bash
+cd train
+convert_to_csv.sh
+```
 
 ## Training: ScratchBERT
 
