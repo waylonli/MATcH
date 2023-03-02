@@ -15,11 +15,17 @@ conda env create -f MATcH_env.yml
 conda activate bert
 ```
 
-If conda does not manage to automatically install PyTorch and cuda. Please install it manually by:
+If conda does not manage to automatically install PyTorch and cuda. Please install the pip packages manually by:
 
 ```bash
 pip install torch==1.8.1+cu111 torchvision==0.9.1+cu111 torchaudio==0.8.1 -f https://download.pytorch.org/whl/torch_stable.html
 pip install transformers==4.2.1
+pip install lap
+pip install datasets==2.3.2
+pip install scikit-learn
+pip install lxml
+pip install spacy
+python -m spacy download en_core_web_sm
 ```
 
 ## Download datasets
