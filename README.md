@@ -79,6 +79,29 @@ bash train_scratchbert_matching.sh
 
 If you want to specify the hyperparameter, here's an example for training a local ScratchBERT matching model:
 
+|Hyperparameters|Description|
+|---|---|
+|`MODELPATH`|Path to save the model|
+|`PRETRAINPATH`|Path to the pretrained language model|
+|`SYM`|Symbol replacement method|
+|`INPUT`|Input type, can be [both, math, text]|
+|`--seed`|Random seed|
+|`-v`|Logger verbosity, higher is quieter|
+|`-i`|Training epochs|
+|`-N`|Batch size|
+|`-L`|Loss for local cross entropy. sigmoid: binary cross entropy|
+|`-W`|Encoder dimension|
+|`-d`|Encoder depth|
+|`--dk`|Encoder query dimension|
+|`--n-heads`|Number of attention heads|
+|`--max-length`|Max length for self attention sequence (to avoid out of memory errors)|
+|`--input`|Input type, can be [both, math, text]|
+|`--optimizer`|Optimizer|
+|`-l`|Learning rate|
+|`--gpu`|GPU id|
+|`--pretrainpath`|Path to pretrained language model|
+
+
 ```bash
 cd train
 conda activate bert
@@ -87,27 +110,11 @@ SYM=conservation # symbol replacement method
 INPUT=both # input type, can be [both, math, text] 
 
 MODELPATH=./scratchbert_${ANNO}_${INPUT}_local
-PRETRAINPATH=./model_files # path / link for ScratchBERT pretrained language model
+PRETRAINPATH= # path / link for ScratchBERT pretrained language model
 
-python neural_model_bert.py train ${MODELPATH} \
-./datasets/${SYM}_train.csv \
-./datasets/${SYM}_dev.csv \
-./datasets/full_dev.csv \
---seed 10000 \ # random seed
--v 40 \ # logger verbosity, higher is quieter
--i 60 \ # training epochs
--N 16 \ # batch size
--L softmax \ # loss for local cross entropy. sigmoid: binary cross entropy
--W 300 \ # encoder dimension
--d 2 \ # encoder depth
---dk 128 \ # encoder query dimension
---n-heads 4 \ # number of attention heads
---max-length 200 \ # max length for self attention sequence (to avoid out of memory errors)
---input ${INPUT} \ # input type, can be [both, math, text]
---optimizer asgd \ # optimizer
--l 2e-3 \ # learning rate
---gpu 0 \ # gpu id
---pretrainpath $PRETRAINPATH # path to pretrained language model
+python neural_model_bert.py train ${MODELPATH} ../datasets/${SYM}_train.csv ../datasets/${SYM}_dev.csv ../datasets/conservation_dev.csv \
+--seed 10000 -v 40 -i 60 -N 16 -L softmax -W 300 -d 2 --dk 128 --n-heads 4 --max-length 200 --input ${INPUT} --optimizer asgd \
+-l 2e-3 --gpu 0 --pretrainpath $PRETRAINPATH
 ```
 
 ## Training: MathBERT
@@ -131,25 +138,9 @@ INPUT=both # input type, can be [both, math, text]
 MODELPATH=./mathbert_${ANNO}_${INPUT}_local
 PRETRAINPATH=tbs17/MathBERT-custom # path / link for pretrained language model
 
-python neural_model_bert.py train ${MODELPATH} \
-./datasets/${SYM}_train.csv \
-./datasets/${SYM}_dev.csv \
-./datasets/full_dev.csv \
---seed 10000 \ # random seed
--v 40 \ # logger verbosity, higher is quieter
--i 60 \ # training epochs
--N 16 \ # batch size
--L softmax \ # loss for local cross entropy. sigmoid: binary cross entropy
--W 300 \ # encoder dimension
--d 2 \ # encoder depth
---dk 128 \ # encoder query dimension
---n-heads 4 \ # number of attention heads
---max-length 200 \ # max length for self attention sequence (to avoid out of memory errors)
---input ${INPUT} \ # input type, can be [both, math, text]
---optimizer asgd \ # optimizer
--l 2e-3 \ # learning rate
---gpu 0 \ # gpu id
---pretrainpath $PRETRAINPATH
+python neural_model_bert.py train ${MODELPATH} ../datasets/${SYM}_train.csv ../datasets/${SYM}_dev.csv ../datasets/full_dev.csv \
+--seed 10000 -v 40 -i 60 -N 16 -L softmax -W 300 -d 2 --dk 128 --n-heads 4 --max-length 200 --input ${INPUT} --optimizer asgd \ 
+-l 2e-3 --gpu 0 --pretrainpath $PRETRAINPATH
 ```
 
 ## Training: NPT
@@ -171,22 +162,9 @@ MODELPATH=./trained_NPT_model
 SYM=conservation # can be changed to partial / trans / full
 
 python neural_model.py train ${MODELPATH} \
-./datasets/${SYM}_train \ # training set
-./datasets/${SYM}_dev \ # validation set
---seed 10000 \ # random seed
--v 40 \ # logger verbosity, higher is quieter
--i 400 \ # training epochs
--N 60 \ # batch size
--L softmax \ # loss for local cross entropy. sigmoid: binary cross entropy
--W 300 \ # encoder dimension
--d 2 \ # encoder depth
---dk 128 \ # encoder query dimension
---n-heads 4 \ # number of attention heads
---max-length 200 \ # max length for self attention sequence (to avoid out of memory errors)
---optimizer asgd \ # optimizer
--l 0.005 \ # learning rate
---gpu 0 \ # gpu id
---input ${INPUT} # input type, can be [both, math, text]
+../datasets/${ANNO}_train \
+../datasets/${ANNO}_dev \
+--seed 10000 -v 40 -i 400 -N 60 -L softmax -W 300 -d 2 --dk 128 --n-heads 4 --max-length 200 --optimizer asgd -l 0.005 --gpu 0 --input ${INPUT}
 ```
 
 ## Evaluation

@@ -8,8 +8,8 @@ TEST_SET=./datasets/${ANNO}_test
 
 # train local NPT model
 python neural_model.py train ${MODELPATH} \
-./datasets/${ANNO}_train \
-./datasets/${ANNO}_dev \
+../datasets/${ANNO}_train \
+../datasets/${ANNO}_dev \
 --seed 10000 -v 40 -i 400 -N 60 -L softmax -W 300 -d 2 --dk 128 --n-heads 4 --max-length 200 --optimizer asgd -l 0.005 --gpu 0 --input ${INPUT}
 
 # train global NPTmodel

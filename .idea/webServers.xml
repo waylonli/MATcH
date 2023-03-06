@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="096bb899-3a49-4d27-b4b1-9fa3a4fc52da" name="hardwell">
+        <fileTransfer accessType="SFTP" host="localhost" port="7000" sshConfigId="589554ff-fa8d-47cb-9bee-daf0b2f35b2c" sshConfig="s1891340@localhost:7000 password">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
