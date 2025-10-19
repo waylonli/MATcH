@@ -190,11 +190,16 @@ ${TESTSET} \
 ## Citation
 
 ```
-@inproceedings{li-23,
-    author = "W. Li and Y. Ziser and M. Coavoux and S. B. Cohen",
-    title = "BERT is not The Count: Learning to Match Mathematical Statements with Proofs",
-    journal = "Proceedings of {EACL}",
-    year = "2023"
+@inproceedings{li-etal-2023-bert,
+    title = {BERT Is Not The Count: Learning to Match Mathematical Statements with Proofs},
+    author = {Li, Weixian Waylon and Ziser, Yftah and Coavoux, Maximin and Cohen, Shay B.},
+    booktitle = {Proceedings of the 17th Conference of the European Chapter of the Association for Computational Linguistics},
+    year = {2023},
+    address = {Dubrovnik, Croatia},
+    publisher = {Association for Computational Linguistics},
+    url = {https://aclanthology.org/2023.eacl-main.260/},
+    doi = {10.18653/v1/2023.eacl-main.260},
+    pages = {3581--3593}
 }
 ```
 
