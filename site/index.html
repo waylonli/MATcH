@@ -6,27 +6,26 @@
     <title>MATcH | EACL 2023</title>
     <meta
       name="description"
-      content="MATcH: an EACL 2023 dataset and model for matching mathematical statements with proofs."
+      content="BERT is not The Count: Learning to Match Mathematical Statements with Proofs."
     />
-    <meta name="theme-color" content="#100b1f" />
+    <meta name="theme-color" content="#f8f6f4" />
     <meta property="og:title" content="MATcH | EACL 2023" />
     <meta
       property="og:description"
-      content="Learning to match mathematical statements with proofs using local scoring and global assignment."
+      content="A dataset and modeling framework for mathematical statement-proof matching."
     />
     <meta property="og:type" content="website" />
     <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="./styles.css" />
   </head>
-  <body>
+  <body class="theme-match">
     <a class="skip-link" href="#main">Skip to content</a>
-    <div class="glow glow-pink"></div>
-    <div class="glow glow-blue"></div>
 
     <header class="site-header">
       <nav class="nav" aria-label="Primary navigation">
-        <a class="brand" href="#top"><span>∀</span>MATcH</a>
+        <a class="brand" href="#top">MATcH</a>
         <div class="nav-links">
+          <a href="#abstract">Abstract</a>
           <a href="#task">Task</a>
           <a href="#dataset">Dataset</a>
           <a href="#citation">Citation</a>
@@ -36,144 +35,155 @@
 
     <main id="main">
       <section class="hero" id="top">
-        <div class="hero-copy">
-          <p class="eyebrow">EACL 2023 · Mathematical Information Retrieval</p>
-          <h1>MATcH</h1>
-          <p class="subtitle">BERT is not The Count: Learning to Match Mathematical Statements with Proofs</p>
-          <p class="lede">
-            MATcH introduces a large-scale task for matching mathematical statements to their
-            corresponding proofs, combining bilinear similarity models with local and global
-            decoding strategies.
-          </p>
-          <p class="authors">Weixian Waylon Li · Yftah Ziser · Maximin Coavoux · Shay B. Cohen</p>
-          <div class="button-row">
-            <a class="button primary" href="https://github.com/waylonli/MATcH" rel="noreferrer">Code</a>
-            <a class="button secondary" href="https://aclanthology.org/2023.eacl-main.260/" rel="noreferrer">ACL Paper</a>
-            <a class="button ghost" href="https://bollin.inf.ed.ac.uk/match.html" rel="noreferrer">Dataset Page</a>
-            <a class="button ghost" href="https://huggingface.co/datasets/waylonli/MATcH" rel="noreferrer">Hugging Face</a>
-          </div>
+        <p class="venue">EACL 2023</p>
+        <h1>BERT is not The Count: Learning to Match Mathematical Statements with Proofs</h1>
+        <p class="authors">Weixian Waylon Li · Yftah Ziser · Maximin Coavoux · Shay B. Cohen</p>
+        <p class="affiliations">University of Edinburgh · University of Copenhagen</p>
+
+        <div class="resource-row" aria-label="Project resources">
+          <a class="resource-button primary" href="https://github.com/waylonli/MATcH" rel="noreferrer">Code</a>
+          <a class="resource-button" href="https://aclanthology.org/2023.eacl-main.260/" rel="noreferrer">ACL Paper</a>
+          <a class="resource-button" href="https://bollin.inf.ed.ac.uk/match.html" rel="noreferrer">Dataset Page</a>
+          <a class="resource-button" href="https://huggingface.co/datasets/waylonli/MATcH" rel="noreferrer">Hugging Face</a>
         </div>
 
-        <aside class="hero-panel" aria-label="MATcH overview">
-          <div class="match-card">
-            <div class="math-box statement">
-              <span>Statement</span>
-              <p>If a function is continuous on a compact metric space, it is uniformly continuous.</p>
-            </div>
-            <div class="assignment">⟷</div>
-            <div class="math-box proof">
-              <span>Proof</span>
-              <p>Extract a finite subcover from local continuity balls and choose the minimum radius.</p>
-            </div>
-          </div>
-          <div class="metric-strip">
-            <div><strong>180k+</strong><span>Pairs</span></div>
-            <div><strong>4</strong><span>Symbol variants</span></div>
-            <div><strong>2</strong><span>Splits</span></div>
-          </div>
-        </aside>
+        <p class="hero-summary">
+          MATcH studies whether models can align mathematical statements with their proofs, and how
+          much they rely on notation overlap instead of deeper mathematical evidence.
+        </p>
       </section>
 
-      <section class="paper-card" id="task">
+      <section class="teaser statement-proof" aria-label="Statement-proof matching example">
+        <div class="math-panel">
+          <span>Statement</span>
+          <p>If a function is continuous on a compact metric space, then it is uniformly continuous.</p>
+        </div>
+        <div class="match-arrow" aria-hidden="true">↔</div>
+        <div class="math-panel">
+          <span>Proof</span>
+          <p>Use local continuity, extract a finite subcover, and choose a common radius.</p>
+        </div>
+        <p class="teaser-caption">
+          The task asks a model to recover the correct proof for each mathematical statement from a
+          candidate collection.
+        </p>
+      </section>
+
+      <section class="section narrow" id="abstract">
+        <h2>Abstract</h2>
+        <p>
+          MATcH introduces a task for matching mathematical statements to their corresponding
+          proofs. The dataset contains more than 180k statement-proof pairs extracted from modern
+          mathematical research articles based on the MREC corpus, making it a large-scale benchmark
+          for mathematical information retrieval.
+        </p>
+        <p>
+          The paper studies bilinear similarity models, local and global decoding, ScratchBERT,
+          MathBERT, and symbol replacement procedures. The results show that global decoding
+          improves assignment coherence, while symbol replacement reveals that models can make
+          relatively shallow use of mathematical text and formulae.
+        </p>
+      </section>
+
+      <section class="section" id="task">
         <div class="section-heading">
-          <p class="eyebrow">Task</p>
-          <h2>Match each theorem-like statement with its proof</h2>
+          <h2>Task and model</h2>
           <p>
-            Given a collection of statements and candidate proofs, MATcH scores statement-proof
-            pairs with a trainable bilinear model. Local decoding ranks proofs independently for
-            each statement, while global decoding enforces one-to-one assignments.
+            MATcH frames proof retrieval as a structured assignment problem over statement-proof
+            scores.
           </p>
         </div>
 
-        <div class="feature-grid">
-          <article>
-            <span>A</span>
-            <h3>Bilinear similarity</h3>
+        <div class="cards three">
+          <article class="card">
+            <span class="card-index">01</span>
+            <h3>Bilinear scoring</h3>
             <p>
-              Encoded statements and proofs are compared with a learned bilinear association score.
+              Encoded statement and proof representations are compared with a trainable bilinear
+              association function.
             </p>
           </article>
-          <article>
-            <span>B</span>
-            <h3>Global decoding</h3>
+          <article class="card">
+            <span class="card-index">02</span>
+            <h3>Local ranking</h3>
             <p>
-              Assignment constraints prevent many statements from selecting the same high-scoring
-              proof.
+              Each statement independently ranks candidate proofs according to its row of the score
+              matrix.
             </p>
           </article>
-          <article>
-            <span>C</span>
-            <h3>Model analysis</h3>
+          <article class="card">
+            <span class="card-index">03</span>
+            <h3>Global assignment</h3>
             <p>
-              Symbol replacement exposes when models depend on shared notation rather than deeper
-              mathematical meaning.
+              A one-to-one constraint prevents many statements from selecting the same proof.
             </p>
           </article>
         </div>
+      </section>
 
-        <div class="results-grid">
+      <section class="section" id="dataset">
+        <div class="section-heading">
+          <h2>Dataset and analysis</h2>
+          <p>
+            The dataset includes multiple splits and symbol replacement levels for measuring
+            robustness beyond shared notation.
+          </p>
+        </div>
+
+        <div class="metrics">
+          <article>
+            <strong>180k+</strong>
+            <span>Statement-proof pairs</span>
+            <p>Extracted from professional mathematical writing in arXiv research articles.</p>
+          </article>
           <article>
             <strong>74.68</strong>
-            <h3>Accuracy</h3>
+            <span>Accuracy</span>
             <p>ScratchBERT with local training and global decoding on conservation data.</p>
           </article>
           <article>
             <strong>57.69</strong>
-            <h3>Full replacement</h3>
-            <p>Accuracy under full symbol replacement using ScratchBERT local-global decoding.</p>
-          </article>
-          <article>
-            <strong>73.73</strong>
-            <h3>MRR</h3>
-            <p>ScratchBERT local-local model on the conservation setting.</p>
+            <span>Full replacement</span>
+            <p>Accuracy under full symbol replacement with ScratchBERT local-global decoding.</p>
           </article>
         </div>
-      </section>
 
-      <section class="paper-card" id="dataset">
-        <div class="section-heading">
-          <p class="eyebrow">Dataset</p>
-          <h2>Mathematical statements and proofs from research articles</h2>
-          <p>
-            MATcH is extracted from arXiv articles based on the MREC corpus. It includes mixed and
-            unmixed variants, plus conservation, partial, full, and transposition symbol replacement
-            levels.
-          </p>
-        </div>
-
-        <div class="dataset-grid">
-          <article>
+        <div class="cards three compact-cards">
+          <article class="card">
             <h3>Mixed split</h3>
-            <p>Statement-proof pairs from the same article can appear across train, dev, and test.</p>
+            <p>Pairs from the same article can span train, development, and test.</p>
           </article>
-          <article>
+          <article class="card">
             <h3>Unmixed split</h3>
-            <p>Pairs from the same article appear in only one split, creating a harder setting.</p>
+            <p>Pairs from the same article appear in only one split, creating a harder benchmark.</p>
           </article>
-          <article>
-            <h3>PB subset</h3>
-            <p>A probability-domain restriction of the mixed dataset.</p>
+          <article class="card">
+            <h3>Symbol variants</h3>
+            <p>Conservation, partial, full, and transposition settings stress-test notation use.</p>
           </article>
         </div>
 
         <div class="figure-grid">
-          <figure class="figure">
-            <img src="./assets/match/zero-a.png" alt="MATcH prediction example before full symbol replacement." />
+          <figure class="paper-figure">
+            <img
+              src="./assets/match/zero-a.png"
+              alt="MATcH prediction example before aggressive symbol replacement."
+            />
             <figcaption>Prediction example before aggressive symbol replacement.</figcaption>
           </figure>
-          <figure class="figure">
-            <img src="./assets/match/full-a.png" alt="MATcH prediction example after full symbol replacement." />
+          <figure class="paper-figure">
+            <img
+              src="./assets/match/full-a.png"
+              alt="MATcH prediction example after full symbol replacement."
+            />
             <figcaption>Prediction example under full symbol replacement.</figcaption>
           </figure>
         </div>
       </section>
 
-      <section class="paper-card" id="citation">
-        <div class="citation-header">
-          <div>
-            <p class="eyebrow">Citation</p>
-            <h2>Reference MATcH</h2>
-          </div>
+      <section class="section narrow" id="citation">
+        <div class="citation-title">
+          <h2>Citation</h2>
           <button class="copy-button" type="button" data-copy-target="bibtex">Copy BibTeX</button>
         </div>
         <pre><code id="bibtex">@inproceedings{li-etal-2023-bert,
@@ -191,7 +201,7 @@
     </main>
 
     <footer class="footer">
-      <span>Built for GitHub Pages.</span>
+      <span>Project page for MATcH.</span>
       <a href="#top">Back to top ↑</a>
     </footer>
 
