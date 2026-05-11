@@ -30,7 +30,9 @@ python -m spacy download en_core_web_sm
 
 ## Download datasets
 
-Available at https://bollin.inf.ed.ac.uk/match.html (or see dataset/ for README)
+Available at:
+- https://bollin.inf.ed.ac.uk/match.html (see [dataset/ for README](https://github.com/waylonli/MATcH/blob/main/datasets/README.md))
+- https://huggingface.co/datasets/waylonli/MATcH (backup)
 
 Once finish downloading the dataset, unzip the three directories "mixed", "pb" and "unmixed" to the `datasets` folder. 
 
