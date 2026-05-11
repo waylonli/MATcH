@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>MATcH | EACL 2023</title>
+    <meta
+      name="description"
+      content="MATcH: an EACL 2023 dataset and model for matching mathematical statements with proofs."
+    />
+    <meta name="theme-color" content="#100b1f" />
+    <meta property="og:title" content="MATcH | EACL 2023" />
+    <meta
+      property="og:description"
+      content="Learning to match mathematical statements with proofs using local scoring and global assignment."
+    />
+    <meta property="og:type" content="website" />
+    <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <div class="glow glow-pink"></div>
+    <div class="glow glow-blue"></div>
+
+    <header class="site-header">
+      <nav class="nav" aria-label="Primary navigation">
+        <a class="brand" href="#top"><span>∀</span>MATcH</a>
+        <div class="nav-links">
+          <a href="#task">Task</a>
+          <a href="#dataset">Dataset</a>
+          <a href="#citation">Citation</a>
+        </div>
+      </nav>
+    </header>
+
+    <main id="main">
+      <section class="hero" id="top">
+        <div class="hero-copy">
+          <p class="eyebrow">EACL 2023 · Mathematical Information Retrieval</p>
+          <h1>MATcH</h1>
+          <p class="subtitle">BERT is not The Count: Learning to Match Mathematical Statements with Proofs</p>
+          <p class="lede">
+            MATcH introduces a large-scale task for matching mathematical statements to their
+            corresponding proofs, combining bilinear similarity models with local and global
+            decoding strategies.
+          </p>
+          <p class="authors">Weixian Waylon Li · Yftah Ziser · Maximin Coavoux · Shay B. Cohen</p>
+          <div class="button-row">
+            <a class="button primary" href="https://github.com/waylonli/MATcH" rel="noreferrer">Code</a>
+            <a class="button secondary" href="https://aclanthology.org/2023.eacl-main.260/" rel="noreferrer">ACL Paper</a>
+            <a class="button ghost" href="https://bollin.inf.ed.ac.uk/match.html" rel="noreferrer">Dataset Page</a>
+            <a class="button ghost" href="https://huggingface.co/datasets/waylonli/MATcH" rel="noreferrer">Hugging Face</a>
+          </div>
+        </div>
+
+        <aside class="hero-panel" aria-label="MATcH overview">
+          <div class="match-card">
+            <div class="math-box statement">
+              <span>Statement</span>
+              <p>If a function is continuous on a compact metric space, it is uniformly continuous.</p>
+            </div>
+            <div class="assignment">⟷</div>
+            <div class="math-box proof">
+              <span>Proof</span>
+              <p>Extract a finite subcover from local continuity balls and choose the minimum radius.</p>
+            </div>
+          </div>
+          <div class="metric-strip">
+            <div><strong>180k+</strong><span>Pairs</span></div>
+            <div><strong>4</strong><span>Symbol variants</span></div>
+            <div><strong>2</strong><span>Splits</span></div>
+          </div>
+        </aside>
+      </section>
+
+      <section class="paper-card" id="task">
+        <div class="section-heading">
+          <p class="eyebrow">Task</p>
+          <h2>Match each theorem-like statement with its proof</h2>
+          <p>
+            Given a collection of statements and candidate proofs, MATcH scores statement-proof
+            pairs with a trainable bilinear model. Local decoding ranks proofs independently for
+            each statement, while global decoding enforces one-to-one assignments.
+          </p>
+        </div>
+
+        <div class="feature-grid">
+          <article>
+            <span>A</span>
+            <h3>Bilinear similarity</h3>
+            <p>
+              Encoded statements and proofs are compared with a learned bilinear association score.
+            </p>
+          </article>
+          <article>
+            <span>B</span>
+            <h3>Global decoding</h3>
+            <p>
+              Assignment constraints prevent many statements from selecting the same high-scoring
+              proof.
+            </p>
+          </article>
+          <article>
+            <span>C</span>
+            <h3>Model analysis</h3>
+            <p>
+              Symbol replacement exposes when models depend on shared notation rather than deeper
+              mathematical meaning.
+            </p>
+          </article>
+        </div>
+
+        <div class="results-grid">
+          <article>
+            <strong>74.68</strong>
+            <h3>Accuracy</h3>
+            <p>ScratchBERT with local training and global decoding on conservation data.</p>
+          </article>
+          <article>
+            <strong>57.69</strong>
+            <h3>Full replacement</h3>
+            <p>Accuracy under full symbol replacement using ScratchBERT local-global decoding.</p>
+          </article>
+          <article>
+            <strong>73.73</strong>
+            <h3>MRR</h3>
+            <p>ScratchBERT local-local model on the conservation setting.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="paper-card" id="dataset">
+        <div class="section-heading">
+          <p class="eyebrow">Dataset</p>
+          <h2>Mathematical statements and proofs from research articles</h2>
+          <p>
+            MATcH is extracted from arXiv articles based on the MREC corpus. It includes mixed and
+            unmixed variants, plus conservation, partial, full, and transposition symbol replacement
+            levels.
+          </p>
+        </div>
+
+        <div class="dataset-grid">
+          <article>
+            <h3>Mixed split</h3>
+            <p>Statement-proof pairs from the same article can appear across train, dev, and test.</p>
+          </article>
+          <article>
+            <h3>Unmixed split</h3>
+            <p>Pairs from the same article appear in only one split, creating a harder setting.</p>
+          </article>
+          <article>
+            <h3>PB subset</h3>
+            <p>A probability-domain restriction of the mixed dataset.</p>
+          </article>
+        </div>
+
+        <div class="figure-grid">
+          <figure class="figure">
+            <img src="./assets/match/zero-a.png" alt="MATcH prediction example before full symbol replacement." />
+            <figcaption>Prediction example before aggressive symbol replacement.</figcaption>
+          </figure>
+          <figure class="figure">
+            <img src="./assets/match/full-a.png" alt="MATcH prediction example after full symbol replacement." />
+            <figcaption>Prediction example under full symbol replacement.</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section class="paper-card" id="citation">
+        <div class="citation-header">
+          <div>
+            <p class="eyebrow">Citation</p>
+            <h2>Reference MATcH</h2>
+          </div>
+          <button class="copy-button" type="button" data-copy-target="bibtex">Copy BibTeX</button>
+        </div>
+        <pre><code id="bibtex">@inproceedings{li-etal-2023-bert,
+  title = {BERT Is Not The Count: Learning to Match Mathematical Statements with Proofs},
+  author = {Li, Weixian Waylon and Ziser, Yftah and Coavoux, Maximin and Cohen, Shay B.},
+  booktitle = {Proceedings of the 17th Conference of the European Chapter of the Association for Computational Linguistics},
+  year = {2023},
+  address = {Dubrovnik, Croatia},
+  publisher = {Association for Computational Linguistics},
+  url = {https://aclanthology.org/2023.eacl-main.260/},
+  doi = {10.18653/v1/2023.eacl-main.260},
+  pages = {3581--3593}
+}</code></pre>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <span>Built for GitHub Pages.</span>
+      <a href="#top">Back to top ↑</a>
+    </footer>
+
+    <script src="./script.js"></script>
+  </body>
+</html>
